@@ -12,12 +12,14 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 export default class CreateRoomPage extends Component {
   defaultVotes = 2;
+
   constructor(props) {
     super(props);
     this.state = {
       guestCanPause: true,
       votesToSkip: this.defaultVotes,
     };
+
     this.handleRoomButtonPressed = this.handleRoomButtonPressed.bind(this);
     this.handleVotesChange = this.handleVotesChange.bind(this);
     this.handleGuestCanPauseChange = this.handleGuestCanPauseChange.bind(this);
@@ -69,13 +71,13 @@ export default class CreateRoomPage extends Component {
             >
               <FormControlLabel
                 value="true"
-                control={<Radio color={"primary"} />}
+                control={<Radio color="primary" />}
                 label="Play/Pause"
                 labelPlacement="bottom"
               />
               <FormControlLabel
                 value="false"
-                control={<Radio color={"secondary"} />}
+                control={<Radio color="secondary" />}
                 label="No Control"
                 labelPlacement="bottom"
               />
@@ -91,13 +93,11 @@ export default class CreateRoomPage extends Component {
               defaultValue={this.defaultVotes}
               inputProps={{
                 min: 1,
-                style: {
-                  textAlign: "center",
-                },
+                style: { textAlign: "center" },
               }}
             />
             <FormHelperText>
-              <div align="center"> Votes Required To Skip Song</div>
+              <div align="center">Votes Required To Skip Song</div>
             </FormHelperText>
           </FormControl>
         </Grid>

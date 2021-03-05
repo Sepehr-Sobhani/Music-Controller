@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { Collapse } from "material-ui/core";
+import { Collapse } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+
 export default class CreateRoomPage extends Component {
   static defaultProps = {
     votesToSkip: 2,
@@ -108,7 +110,11 @@ export default class CreateRoomPage extends Component {
   renderUpdateButtons() {
     return (
       <Grid item xs={12} align="center">
-        <Button color="primary" variant="contained" onClick={this.handle}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={this.handleUpdateButtonPressed}
+        >
           Update Room
         </Button>
       </Grid>
@@ -121,13 +127,29 @@ export default class CreateRoomPage extends Component {
     return (
       <Grid container spacing={1}>
         <Grid item xs={12} align="center">
-          <Typography component="h4" variant="h4">
-            <Collapse
-              in={this.state.errorMsg != "" || this.state.successMsg != ""}
-            >
-              {this.state.successMsg}
-            </Collapse>
-          </Typography>
+          <Collapse
+            in={this.state.errorMsg != "" || this.state.successMsg != ""}
+          >
+            {this.state.successMsg != "" ? (
+              <Alert
+                severity="success"
+                onClose={() => {
+                  this.setState({ successMsg: "" });
+                }}
+              >
+                {this.state.successMsg}
+              </Alert>
+            ) : (
+              <Alert
+                severity="error"
+                onClose={() => {
+                  this.setState({ errorMsg: "" });
+                }}
+              >
+                {this.state.errorMsg}
+              </Alert>
+            )}
+          </Collapse>
         </Grid>
         <Grid item xs={12} align="center">
           <Typography component="h4" variant="h4">

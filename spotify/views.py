@@ -1,6 +1,5 @@
-from django.http import response
-from django.shortcuts import redirect, render
-from .credentials import REDIRECT_URI, CLIENT_ID, CLIENT_SECRET
+from django.shortcuts import render, redirect
+from .credentials import REDIRECT_URI, CLIENT_SECRET, CLIENT_ID
 from rest_framework.views import APIView
 from requests import Request, post
 from rest_framework import status
@@ -10,7 +9,7 @@ from api.models import Room
 
 
 class AuthURL(APIView):
-    def get(self, request, format=None):
+    def get(self, request, fornat=None):
         scopes = 'user-read-playback-state user-modify-playback-state user-read-currently-playing'
 
         url = Request('GET', 'https://accounts.spotify.com/authorize', params={
@@ -32,7 +31,7 @@ def spotify_callback(request, format=None):
         'code': code,
         'redirect_uri': REDIRECT_URI,
         'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
+        'client_secret': CLIENT_SECRET
     }).json()
 
     access_token = response.get('access_token')
@@ -59,8 +58,8 @@ class IsAuthenticated(APIView):
 
 class CurrentSong(APIView):
     def get(self, request, format=None):
-        roomCode = self.request.session.get('room_code')
-        room = Room.objects.filter(code=roomCode)
+        room_code = self.request.session.get('room_code')
+        room = Room.objects.filter(code=room_code)
         if room.exists():
             room = room[0]
         else:
